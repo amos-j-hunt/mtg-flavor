@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Card One",
+        "setName": "Set A",
+        "flavorText": "Line one\nLine two",
+        "set_code": "SETA",
+        "color_identity": "U"
+    },
+    {
+        "name": "Card Two",
+        "setName": "Set B",
+        "flavorText": "",
+        "set_code": "SETB",
+        "color_identity": "G"
+    },
+    {
+        "name": "Card Three",
+        "setName": "Set C",
+        "set_code": "SETC",
+        "color_identity": "R"
+    }
+]

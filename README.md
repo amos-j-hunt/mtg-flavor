@@ -49,3 +49,10 @@ The script will:
 ## Viewing outputs
 
 Check the `data/processed` directory for CSV files containing sentiment scores and aggregates. Generated figures are stored under `reports/figures`.
+
+## Running tests
+
+Execute the unit test suite with `pytest`:
+```bash
+pytest
+```
