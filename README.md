@@ -6,7 +6,7 @@ workflow is split into several stages:
 1. **Data acquisition** (`src/acquisition.py`)
 2. **Cleaning & normalization** (`src/cleaning.py` – see `clean_cards`)
 3. **Sentiment scoring** (`src/sentiment.py`)
-4. **Aggregation** (`src/aggregation.py`)
+4. **Aggregation** (`src/aggregation.py` – see `scripts/aggregate_results.py`)
 5. **Visualization** (`src/visualization.py`)
 
 The repository is organized as follows:
