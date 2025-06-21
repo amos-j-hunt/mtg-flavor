@@ -2,6 +2,7 @@
 
 from textblob import TextBlob
 from nltk.sentiment import SentimentIntensityAnalyzer
+import nltk
 from typing import Iterable, Dict
 
 # Initialize VADER analyzer lazily
@@ -12,6 +13,7 @@ def vader() -> SentimentIntensityAnalyzer:
     """Return a singleton VADER analyzer."""
     global _vader
     if _vader is None:
+        nltk.download("vader_lexicon", quiet=True)
         _vader = SentimentIntensityAnalyzer()
     return _vader
 
