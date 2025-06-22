@@ -22,13 +22,21 @@ def download_all_printings(dest: Path) -> None:
     tmp_path.unlink()
 
 
-def run_pipeline() -> None:
+def run_pipeline(raw_path: Path | None = None) -> None:
     """Run the full sentiment analysis pipeline."""
-    raw_path = Path("data/raw/AllPrintings.json")
+    if raw_path is None:
+        raw_path = Path("data/raw/AllPrintings.json")
+
     if not raw_path.is_file():
         download_all_printings(raw_path)
     print(f"Loading cards from {raw_path} ...")
-    cards = load_and_clean_cards(raw_path)
+    try:
+        cards = load_and_clean_cards(raw_path)
+    except FileNotFoundError:
+        # The file may have been removed after the existence check. Re-download
+        # and try again before failing.
+        download_all_printings(raw_path)
+        cards = load_and_clean_cards(raw_path)
 
     texts = [card["flavorText"] for card in cards]
     print("Scoring flavor text ...")
