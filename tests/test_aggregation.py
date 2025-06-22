@@ -6,7 +6,7 @@ from pathlib import Path
 # Ensure the src package is importable when running this file directly
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from src.aggregation import by_set, by_color
+from src.aggregation import by_set, by_color, by_colors
 
 
 def test_by_set_groups_average():
@@ -29,3 +29,17 @@ def test_by_color_groups_average():
     result = result.sort_index()
     assert list(result.index) == ["R", "U"]
     assert result.loc["U", "vader_compound"] == pytest.approx(0.3)
+
+
+def test_by_colors_expands_lists_and_handles_colorless():
+    df = pd.DataFrame({
+        "colors": [["U"], ["U", "R"], []],
+        "vader_compound": [0.2, 0.4, 0.6],
+    })
+    result = by_colors(df)
+    expected_order = ["B", "U", "G", "R", "W", "C"]
+    assert list(result.index) == expected_order
+    assert result.loc["U", "vader_compound"] == pytest.approx((0.2 + 0.4) / 2)
+    assert result.loc["R", "vader_compound"] == pytest.approx(0.4)
+    assert result.loc["C", "vader_compound"] == pytest.approx(0.6)
+    assert pd.isna(result.loc["B", "vader_compound"])
