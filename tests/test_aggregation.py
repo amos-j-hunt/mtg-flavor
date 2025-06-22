@@ -1,5 +1,10 @@
 import pytest
 import pandas as pd
+import sys
+from pathlib import Path
+
+# Ensure the src package is importable when running this file directly
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from src.aggregation import by_set, by_color
 

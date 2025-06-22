@@ -1,4 +1,8 @@
 from pathlib import Path
+import sys
+
+# Ensure the src package is importable when running this file directly
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from src.acquisition import load_cards, load_and_clean_cards
 
