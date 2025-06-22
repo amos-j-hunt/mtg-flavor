@@ -1,6 +1,7 @@
 """Aggregation helpers for analyzing sentiment statistics."""
 
 import pandas as pd
+from typing import Iterable, Dict, List
 
 
 def by_set(df: pd.DataFrame) -> pd.DataFrame:

@@ -20,3 +20,9 @@ def test_score_texts_multiple():
     assert isinstance(scores, list)
     assert len(scores) == 2
     assert set(scores[0]) == set(scores[1])
+
+
+def test_score_text_includes_nrc():
+    result = score_text("This card is amazing!")
+    assert "nrc_top_emotion" in result
+    assert isinstance(result["nrc_top_emotion"], str)
