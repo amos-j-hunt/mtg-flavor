@@ -27,6 +27,22 @@ def clean_cards(cards: Iterable[Dict]) -> List[Dict]:
             cleaned["name"] = normalize(cleaned["name"])
         if "setName" in cleaned:
             cleaned["setName"] = normalize(cleaned["setName"])
+
+        # Normalize color identity field for downstream analysis. MTGJSON uses
+        # the camelCase key ``colorIdentity`` with a list value of individual
+        # color letters (e.g. ``["U", "R"]``).  The rest of this project expects
+        # a snake_case ``color_identity`` column containing a simple string like
+        # ``"UR"``. Handle both possibilities so the pipeline works regardless of
+        # which form the data provides.
+        if "color_identity" not in cleaned and "colorIdentity" in cleaned:
+            ci = cleaned.get("colorIdentity")
+            if isinstance(ci, list):
+                cleaned["color_identity"] = "".join(ci)
+            elif ci is not None:
+                cleaned["color_identity"] = str(ci)
+        elif "color_identity" in cleaned and isinstance(cleaned["color_identity"], list):
+            cleaned["color_identity"] = "".join(cleaned["color_identity"])
+
         cleaned_cards.append(cleaned)
 
     return cleaned_cards
