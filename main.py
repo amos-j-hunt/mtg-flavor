@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 from src.acquisition import load_and_clean_cards
 from src.sentiment import score_texts
-from src.aggregation import by_set, by_color
+from src.aggregation import by_set, by_colors
 from src.visualization import plot_average_sentiment
 
 
@@ -60,7 +60,7 @@ def run_pipeline(raw_path: Path | None = None) -> None:
         "vader_neg",
         "vader_neu",
     ]
-    df_by_color = by_color(df[["color_identity"] + metrics])
+    df_by_color = by_colors(df[["colors"] + metrics])
     agg_path = processed_dir / "average_sentiment_by_color.csv"
     df_by_color.to_csv(agg_path)
     print(f"Saved aggregation to {agg_path}")
@@ -68,7 +68,9 @@ def run_pipeline(raw_path: Path | None = None) -> None:
     print("Generating figure ...")
     fig_path = Path("reports/figures/average_polarity_by_color.png")
     fig_path.parent.mkdir(parents=True, exist_ok=True)
-    plot_average_sentiment(df, group="color_identity", metric="textblob_polarity")
+    expanded = df.assign(color=df["colors"].apply(lambda c: c if c else ["C"]))
+    expanded = expanded.explode("color")
+    plot_average_sentiment(expanded, group="color", metric="textblob_polarity")
     plt.savefig(fig_path)
     plt.close()
     print(f"Saved figure to {fig_path}")

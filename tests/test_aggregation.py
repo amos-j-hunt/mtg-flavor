@@ -36,8 +36,10 @@ def test_by_colors_expands_lists_and_handles_colorless():
         "colors": [["U"], ["U", "R"], []],
         "vader_compound": [0.2, 0.4, 0.6],
     })
-    result = by_colors(df).sort_index()
-    assert list(result.index) == ["C", "R", "U"]
+    result = by_colors(df)
+    expected_order = ["B", "U", "G", "R", "W", "C"]
+    assert list(result.index) == expected_order
     assert result.loc["U", "vader_compound"] == pytest.approx((0.2 + 0.4) / 2)
     assert result.loc["R", "vader_compound"] == pytest.approx(0.4)
     assert result.loc["C", "vader_compound"] == pytest.approx(0.6)
+    assert pd.isna(result.loc["B", "vader_compound"])

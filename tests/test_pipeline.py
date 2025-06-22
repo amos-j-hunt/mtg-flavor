@@ -34,14 +34,14 @@ def test_run_pipeline_redownloads(tmp_path, monkeypatch):
             path.unlink()
             raise FileNotFoundError
         # second attempt should succeed
-        return [{"flavorText": "test", "color_identity": "U"}]
+        return [{"flavorText": "test", "color_identity": "U", "colors": ["U"]}]
 
     # patch helpers
     monkeypatch.setattr(main, "download_all_printings", fake_download)
     monkeypatch.setattr(main, "load_and_clean_cards", fake_load_and_clean)
     monkeypatch.setattr(main, "score_texts", lambda texts: [{"textblob_polarity":0, "vader_compound":0,
                                                              "vader_pos":0, "vader_neg":0, "vader_neu":0} for _ in texts])
-    monkeypatch.setattr(main, "by_color", lambda df: pd.DataFrame())
+    monkeypatch.setattr(main, "by_colors", lambda df: pd.DataFrame())
     monkeypatch.setattr(main, "plot_average_sentiment", lambda *a, **k: None)
 
     main.run_pipeline(raw_path=raw_path)

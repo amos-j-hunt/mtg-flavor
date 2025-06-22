@@ -44,8 +44,8 @@ The script will:
 - score flavor text sentiment
 - classify emotional tone with NRCLex
 - save results to `data/processed/sentiment_scores.csv`
-- aggregate sentiment by color and save to `data/processed/average_sentiment_by_color.csv`
-- create a chart in `reports/figures/average_polarity_by_color.png`
+ - aggregate sentiment by single card colors and save to `data/processed/average_sentiment_by_color.csv`
+ - create a chart in `reports/figures/average_polarity_by_color.png`
 
 ## Viewing outputs
 

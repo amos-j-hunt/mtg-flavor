@@ -7,7 +7,7 @@ sys.path.append(str(repo_root))
 
 import pandas as pd
 
-from src.aggregation import by_set, by_color
+from src.aggregation import by_set, by_colors
 
 
 def main() -> None:
@@ -28,7 +28,7 @@ def main() -> None:
     ]
 
     df_by_set = by_set(df[["set_code"] + metrics])
-    df_by_color = by_color(df[["color_identity"] + metrics])
+    df_by_color = by_colors(df[["colors"] + metrics])
 
     print("Average sentiment by set:\n", df_by_set.head(), sep="")
     print("\nAverage sentiment by color:\n", df_by_color.head(), sep="")
