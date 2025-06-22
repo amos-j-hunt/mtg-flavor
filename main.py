@@ -1,4 +1,6 @@
 from pathlib import Path
+import urllib.request
+import gzip
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -8,9 +10,23 @@ from src.aggregation import by_set, by_color
 from src.visualization import plot_average_sentiment
 
 
+def download_all_printings(dest: Path) -> None:
+    """Download the AllPrintings dataset if it's missing."""
+    url = "https://mtgjson.com/api/v5/AllPrintings.json.gz"
+    print(f"{dest} not found. Downloading from {url} ...")
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    tmp_path = dest.with_suffix(".json.gz")
+    urllib.request.urlretrieve(url, tmp_path)
+    with gzip.open(tmp_path, "rb") as fin, open(dest, "wb") as fout:
+        fout.write(fin.read())
+    tmp_path.unlink()
+
+
 def run_pipeline() -> None:
     """Run the full sentiment analysis pipeline."""
     raw_path = Path("data/raw/AllPrintings.json")
+    if not raw_path.is_file():
+        download_all_printings(raw_path)
     print(f"Loading cards from {raw_path} ...")
     cards = load_and_clean_cards(raw_path)
 
