@@ -31,7 +31,7 @@ See `mtg_flavor_text_sentiment_analysis.md` for the full project outline.
    ```bash
    pip install -r requirements.txt
    ```
-2. Download the MTGJSON `AllPrintings.json` dataset from [https://mtgjson.com](https://mtgjson.com) and place it in `data/raw/AllPrintings.json`.
+2. `main.py` will automatically download the MTGJSON `AllPrintings.json` dataset if it is not already present. If you prefer, you can also manually download it from [https://mtgjson.com](https://mtgjson.com) and place the file at `data/raw/AllPrintings.json`.
 
 ## Running the pipeline
 
