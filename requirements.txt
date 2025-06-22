@@ -2,3 +2,4 @@ pandas
 textblob
 nltk
 matplotlib
+nrclex

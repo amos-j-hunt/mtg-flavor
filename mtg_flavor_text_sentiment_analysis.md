@@ -27,7 +27,7 @@ Leverage natural language processing (NLP) techniques to analyze and visualize s
   - TextBlob (polarity, subjectivity)  
   - VADER (compound, positive, negative, neutral)
 - **3.2** Score each flavor text according to chosen tools.
-- **3.3** Optionally apply additional NLP models for humor detection or tone classification if feasible.
+- **3.3** Apply NRCLex to classify emotional tone for each flavor text.
 
 ### 4. Aggregation and Comparison
 - **4.1** Group sentiment scores by:
